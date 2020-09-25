@@ -17,7 +17,7 @@ promotionRouter.route('/')               // Endpoints: Write a route() method on
         })
         .catch(err => next(err)); 
     })
-    .post(authenticate.verifyUser, (req, res, next) => {     // create new doc in promotion collection
+    .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Promotion.create(req.body)
         .then(promotion => {
             console.log('Promotion Created ', promotion);
@@ -31,7 +31,7 @@ promotionRouter.route('/')               // Endpoints: Write a route() method on
         res.statusCode = 403;
         res.end('PUT operation not supported on /promotions');
     })
-    .delete(authenticate.verifyUser, (req, res, next) => {     // delete request for deleting any docs in promotion collection
+    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {    // delete request for deleting any docs in promotion collection
         Promotion.deleteMany()
         .then(response => {
             res.statusCode = 200;
@@ -55,7 +55,7 @@ promotionRouter.route('/')               // Endpoints: Write a route() method on
         res.statusCode = 403;
         res.end(`POST operation not supported on /promotions/${req.params.promotionId}`); 
     })
-    .put(authenticate.verifyUser, (req, res) => {        // put request for updating any promotions with ID matching ID requested
+    .put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {      // put request for updating any promotions with ID matching ID requested
         Promotion.findByIdAndUpdate(req.params.promotionId, {
             $set: req.body
         }, { new: true })
@@ -66,7 +66,7 @@ promotionRouter.route('/')               // Endpoints: Write a route() method on
         })
         .catch(err => next(err)); 
     })
-    .delete(authenticate.verifyUser, (req, res, next) => {       // delete request for deleting any promotions with ID matching ID requested
+    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res) => {       // delete request for deleting any promotions with ID matching ID requested
         Promotion.findByIdAndDelete(req.params.promotionId)
         .then(response => {
             res.statusCode = 200;

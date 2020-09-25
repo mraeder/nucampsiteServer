@@ -17,7 +17,7 @@ partnerRouter.route('/')             // Create a Node module named partnerRouter
         })
         .catch(err => next(err));
     })
-    .post(authenticate.verifyUser, (req, res, next) => {         // create new doc in partner collection 
+    .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => { 
         Partner.create(req.body)
         .then(partner => {
             console.log('Partner created ', partner);
@@ -31,7 +31,7 @@ partnerRouter.route('/')             // Create a Node module named partnerRouter
         res.statusCode = 403;
         res.end('PUT operation not supported on /partners');
     })
-    .delete(authenticate.verifyUser, (req, res, next) => {
+    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Partner.deleteMany()
         .then(response => {
             res.statusCode = 200;
@@ -55,7 +55,7 @@ partnerRouter.route('/')             // Create a Node module named partnerRouter
         res.statusCode = 403;
         res.end(`POST operation not supported on /partners/${req.params.partnerId}`); 
     })
-    .put(authenticate.verifyUser, (req, res, next) => {           // put request updating any partners with ID matching ID requested
+    .put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {           // put request updating any partners with ID matching ID requested
         Partner.findByIdAndUpdate(req.params.partnerId, {
             $set: req.body
         }, { new: true })
@@ -66,7 +66,7 @@ partnerRouter.route('/')             // Create a Node module named partnerRouter
         })
         .catch(err => next(err)); 
     })
-    .delete(authenticate.verifyUser, (req, res, next) => {        // delete request for deleting any partners with ID matching ID requested
+    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {        // delete request for deleting any partners with ID matching ID requested
         Partner.findByIdAndDelete(req.params.partnerId)
         .then(response => {
             res.statusCode = 200;
