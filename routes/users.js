@@ -6,7 +6,7 @@ const authenticate = require('../authenticate');
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {   // WK 3 Task 3
+router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {   // WK 3 Task 3 Code is looking to verify it's a user first, then verifies whether it's an admin
   User.find()
   .then(users => {
     res.statusCode = 200;
@@ -16,7 +16,7 @@ router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, ne
   .catch(err => next(err));
 });
 
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res) => {                       
   User.register(new User({username: req.body.username}),
   req.body.password, (err, user) => {
       if (err) {

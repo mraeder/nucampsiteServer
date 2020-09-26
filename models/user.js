@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');    // This auto adds user and pass to the schema 
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({  // pass this constructor 2 objects as arguments

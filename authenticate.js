@@ -39,7 +39,8 @@ exports.jwtPassport = passport.use(
 
 exports.verifyUser = passport.authenticate('jwt', {session: false});
 
-exports.verifyAdmin = function(req, res, next) {    // Create and export a new function named verifyAdmin()
+exports.verifyAdmin = ((req, res, next) => {    // Create and export a new function named verifyAdmin()
+    console.log(req.user.admin, 'Hello');
     if (req.user.admin) {    // req.user.admin to find out if user is an administrator
         return next();       // have the verifyAdmin() function return next(); if the user is an admin
     } else {
@@ -47,4 +48,4 @@ exports.verifyAdmin = function(req, res, next) {    // Create and export a new f
         err = new Error("You are not authorized to perform this operation!");   // create a new Error object with the message "You are not authorized to perform this operation!"
         return next(err);   // return next(err)
     }
-}
+})
