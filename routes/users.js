@@ -2,13 +2,14 @@ const express = require('express');
 const User = require('../models/user');  // require user model, .. = down 1 directory before accessing models directory
 const passport = require('passport');
 const authenticate = require('../authenticate');
+const cors = require('./cors'); 
 
-const router = express.Router();
+const router = express.Router(); 
 
 /* GET users listing. */
-router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {   // WK 3 Task 3 Code is looking to verify it's a user first, then verifies whether it's an admin
-  User.find()
-  .then(users => {
+router.get('/', cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {   // WK 3 Task 3 Code is looking to verify it's a user first, then verifies whether it's an admin
+  User.find()         
+  .then(users => {      
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json(users)
