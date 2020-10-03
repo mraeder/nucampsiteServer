@@ -11,6 +11,7 @@ const userSchema = new Schema({  // pass this constructor 2 objects as arguments
     type: String,
         default: ''
     },
+    facebookId: String,
     admin: {
         type: Boolean,
         default: false  // by default, when a new user doc created, admin field will be set to false
