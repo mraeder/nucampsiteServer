@@ -25,14 +25,14 @@ favoriteRouter.route('/')  //Set up a route using favoriteRouter.route('/')
     .then(favorite => {  
         if (favorite) {
             Favorite.create({user: req.user._id, campsites: req.body})
-            then(favorite => { 
+            .then(favorite => { // ****** JONAH fixed this bug ******
                 console.log('Favorite Created', favorite);
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(favorite);
             })
         .catch(err => next(err));
-    } else (favorite) {
+    } else { // ****** JONAH fixed this bug ******
             req.body.forEach(campsite => {
                 if (favorite.campsites.includes(campsite._id)) {
                     err = new Error('Favorite document already exists');

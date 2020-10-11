@@ -59,7 +59,7 @@ partnerRouter.route('/')             // Create a Node module named partnerRouter
         res.end(`POST operation not supported on /partners/${req.params.partnerId}`); 
     })
     .put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {           // put request updating any partners with ID matching ID requested
-        Partner.findByIdAndUpdate(req.params.partnerId, {(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+        Partner.findByIdAndUpdate(req.params.partnerId, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => { // ****** JONAH fixed this bug. Still might be wrong ******
             $set: req.body
         }, { new: true })
         .then(partner => {
